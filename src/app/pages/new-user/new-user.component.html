@@ -1,0 +1,27 @@
+<form class="user-form" [formGroup]="form" (ngSubmit)="submit($event)">
+
+  <div class="form-group">
+    <label for="name">Name:</label>
+    <input formControlName="name" type="text" id="name" name="name"  required>
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email:</label>
+    <input formControlName="email" type="email" id="email" name="email" required>
+  </div>
+
+  <div class="form-group">
+    <label for="departmentType">Department:</label>
+    <select formControlName="departmentType" id="departmentType" name="departmentType" required>
+      <option value="HR">HR</option>
+      <option value="IT">IT</option>
+      <option value="FINANCE">FINANCE</option>
+      <option value="MARKETING">MARKETING</option>
+    </select>
+  </div>
+
+  <div class="button-group">
+    <button type="submit">Submit</button>
+    <button type="button" (click)="onReturn()">Return</button>
+  </div>
+</form>
