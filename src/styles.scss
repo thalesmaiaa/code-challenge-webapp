@@ -1,1 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+@import "ngx-toastr/toastr";
+
+html {
+  font-family: "Roboto", sans-serif;
+
+  .toast-container {
+    padding-top: 20px;
+  }
+}
