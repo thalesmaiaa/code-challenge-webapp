@@ -25,5 +25,11 @@
       </tr>
     </tbody>
   </table>
+ <!-- Pagination controls -->
+ <div class="pagination">
+  <button (click)="prevPage()" class="pagination-btn">Previous</button>
+  <span class="pagination-info">Page {{ currentPage }} of {{ totalPages }}</span>
+  <button  (click)="nextPage()" class="pagination-btn">Next</button>
+</div>
   <button class="add-user-btn" (click)="redirectToNewUser()">Add user</button>
 </main>

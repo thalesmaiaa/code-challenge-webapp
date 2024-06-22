@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { UserService } from '../../services/user.service';
+import { PageableResponse, UserService } from '../../services/user.service';
 import { take } from 'rxjs';
 import { User } from '../../types/user.type';
 import { ToastrService } from 'ngx-toastr';
@@ -17,10 +17,39 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class UsersComponent {
   users: User[] = [];
+  
+  currentPage: number = 1;
+  itemsPerPage = 10; 
+  isLastPage = false;
+  totalPages = 0;
+
+  setData = (data: PageableResponse<User>) => {
+    this.users = data.content;
+    this.currentPage = data.pageable.pageNumber + 1;
+    this.isLastPage = data.last;
+    this.totalPages = data.totalPages;
+
+  }
+
+  nextPage () {
+    if(!this.isLastPage){
+      const nextPage = this.currentPage + 1;
+      this.currentPage = nextPage;
+      this.userService.getAllUsers(nextPage).pipe(take(1)).pipe(take(1)).subscribe(this.setData);
+    }
+  }
+
+  prevPage() {
+    if(this.currentPage !== 1){
+      const nextPage = this.currentPage - 1;
+      this.currentPage = nextPage;
+      this.userService.getAllUsers(nextPage).pipe(take(1)).pipe(take(1)).subscribe(this.setData);
+    }
+  }
 
   constructor(private userService: UserService, private toaster: ToastrService, private router: Router,) {
     this.toaster = toaster;
-    this.userService.getAllUsers().pipe(take(1)).subscribe((users) => this.users = users)
+    this.userService.getAllUsers().pipe(take(1)).subscribe(this.setData)
   }
 
   onDeleteUser(id: string) {

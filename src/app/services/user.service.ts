@@ -2,6 +2,32 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../types/user.type';
 
+export interface PageableResponse<T> {
+  content: T[];
+  totalPages: number;
+  totalElements: number;
+  last: boolean;
+  size: number;
+  number: number;
+  numberOfElements: number;
+  first: boolean;
+  empty: boolean;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    offset: number;
+    paged: boolean;
+    unpaged: boolean
+  }
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,8 +36,8 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAllUsers(){
-    return this.httpClient.get<User[]>(`${this.baseUrl}/users`);
+  getAllUsers(page?:number){
+    return this.httpClient.get<PageableResponse<User>>(`${this.baseUrl}/users?page=${((page || 1) - 1)}`);
   }
 
   deleteUserBy(id: string){
