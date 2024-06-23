@@ -1,5 +1,10 @@
 <main>
   <h2>Users List</h2>
+
+  <div *ngIf="loading" class="loading-overlay">
+    <p>Loading...</p>
+  </div>
+  
   <table class="table">
     <thead>
       <tr>

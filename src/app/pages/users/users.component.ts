@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PageableResponse, UserService } from '../../services/user.service';
 import { take } from 'rxjs';
 import { User } from '../../types/user.type';
@@ -15,19 +15,21 @@ import { ReactiveFormsModule } from '@angular/forms';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
-export class UsersComponent {
+export class UsersComponent implements OnInit {
   users: User[] = [];
   
   currentPage: number = 1;
   itemsPerPage = 10; 
   isLastPage = false;
   totalPages = 0;
+  loading = false;
 
   setData = (data: PageableResponse<User>) => {
     this.users = data.content;
-    this.currentPage = data.pageable.pageNumber + 1;
+    this.currentPage = data.content.length  ? data.pageable.pageNumber + 1 : 0;
     this.isLastPage = data.last;
     this.totalPages = data.totalPages;
+    this.loading = false;
   }
 
   nextPage () {
@@ -48,7 +50,11 @@ export class UsersComponent {
 
   constructor(private userService: UserService, private toaster: ToastrService, private router: Router,) {
     this.toaster = toaster;
-    this.userService.getAllUsers().pipe(take(1)).subscribe(this.setData)
+  }
+
+  ngOnInit() {
+    this.loading = true;
+    this.userService.getAllUsers().pipe(take(1)).subscribe(this.setData);
   }
 
   onDeleteUser(id: string) {
