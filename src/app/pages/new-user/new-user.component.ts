@@ -31,11 +31,12 @@ export class NewUserComponent implements OnInit {
     this.id = null;
   }
 
+
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.id = id;
 
     if(id){
+      this.id = id;
       this.userService.getUserBy(id).subscribe({
         next: (user) => this.form.patchValue(user)
       });
@@ -44,19 +45,22 @@ export class NewUserComponent implements OnInit {
 
   onReturn =() => {
     this.router.navigate(['users']);
+    this.form.enable();
   }
 
   createUser(){
+    this.form.disable();
     this.userService.createUser(this.form.value).subscribe({
       next: () => this.toaster.success('User created successfully').onHidden.subscribe(this.onReturn),
-      error: (error) => this.toaster.error(error),
+      error: (error) => this.toaster.error(error).onHidden.subscribe(() => this.form.enable()),
     });
   }
 
   updateUser(){
+    this.form.disable();
     this.userService.updateUser(this.id as string, this.form.value).subscribe({
       next: () => this.toaster.success('User Updated successfully').onHidden.subscribe(this.onReturn),
-      error: (error) => this.toaster.error(error),
+      error: (error) => this.toaster.error(error).onHidden.subscribe(() => this.form.enable()),
     });
   }
 
