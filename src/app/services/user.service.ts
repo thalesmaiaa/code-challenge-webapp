@@ -26,8 +26,6 @@ export interface PageableResponse<T> {
   }
 }
 
-
-
 @Injectable({
   providedIn: 'root'
 })
@@ -55,4 +53,5 @@ export class UserService {
   updateUser(id: string, user: User){
     return this.httpClient.put(`${this.baseUrl}/users/${id}`, user);
   }
+
 }

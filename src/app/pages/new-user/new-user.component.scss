@@ -16,6 +16,16 @@
     margin-bottom: 5px;
   }
 
+  .helper-text {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+
+  .helper-text.hidden {
+    display: none;
+  }
+
   input,
   select {
     width: 100%;

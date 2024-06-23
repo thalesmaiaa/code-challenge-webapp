@@ -28,7 +28,6 @@ export class UsersComponent {
     this.currentPage = data.pageable.pageNumber + 1;
     this.isLastPage = data.last;
     this.totalPages = data.totalPages;
-
   }
 
   nextPage () {
@@ -57,19 +56,6 @@ export class UsersComponent {
       next: () => {
         this.users = this.users.filter((user) => user.id !== id);
         this.toaster.success('User deleted successfully');
-      },
-      error: (error: Error) => {
-        const { message } = error.error;
-        this.toaster.error(message);
-      },
-    })
-  }
-
-  onCreateUser(user: Omit<User, 'id'>) {
-    this.userService.createUser(user).subscribe({
-      next: (user) => {
-        this.users = [...this.users, user as User];
-        this.toaster.success('User created successfully)');
       },
       error: (error: Error) => {
         const { message } = error.error;
