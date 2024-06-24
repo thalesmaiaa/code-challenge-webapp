@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { PageableResponse, UserService } from '../../services/user.service';
+import { UserService } from '../../services/user.service';
 import { take } from 'rxjs';
 import { User } from '../../types/user.type';
 import { ToastrService } from 'ngx-toastr';
-import { Error } from '../../types/requests.type';
+import { Error, PageableResponse } from '../../types/requests.type';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
